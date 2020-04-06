@@ -1,11 +1,15 @@
-const usersRepo = require("./board.memory.repository");
+const boardsRepo = require("./board.memory.repository");
 
-const getAll = () => usersRepo.getAll();
+const getAllBoards = () => boardsRepo.getAllBoards();
+const getBoardById = id => boardsRepo.getBoardById(id);
+const createBoard = data => boardsRepo.createBoard(data);
+const updateBoard = (id, data) => boardsRepo.updateBoard(id, data);
+const deleteBoard = id => boardsRepo.deleteBoard(id);
 
 module.exports = {
-  getAll,
-  pushNew: usersRepo.pushNew,
-  getById: usersRepo.getById,
-  update: usersRepo.update,
-  remove: usersRepo.remove
+  getAllBoards,
+  getBoardById,
+  createBoard,
+  updateBoard,
+  deleteBoard
 };

@@ -1,0 +1,16 @@
+[
+  { "id": "1", "name": "Alexey", "login": "Leha228", "password": "123" },
+  {
+    "id": "ad63df3d-98e1-480f-9ac1-c33989ae8f35",
+    "name": "Diana",
+    "login": "DIN000000000000001111111111111",
+    "password": "rwerwerwe"
+  },
+  { "id": "3", "name": "Andrey", "login": "Andrey228", "password": "789" },
+  {
+    "id": "780bad79-f339-45ec-a584-98063893ebba",
+    "name": "Alesya",
+    "login": "Alesya1010",
+    "password": "324reweu"
+  }
+]

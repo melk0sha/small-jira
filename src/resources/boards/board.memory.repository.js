@@ -1,6 +1,17 @@
-const getAll = async () => {
-  // TODO: mock implementation. should be replaced during task development
-  return [];
-};
+// const fs = require("fs");
+// const path = require("path");
+// const Board = require("./board.model");
 
-module.exports = { getAll };
+const getAllBoards = async () => {};
+const getBoardById = async () => {};
+const createBoard = async () => {};
+const updateBoard = async () => {};
+const deleteBoard = async () => {};
+
+module.exports = {
+  getAllBoards,
+  getBoardById,
+  createBoard,
+  updateBoard,
+  deleteBoard
+};

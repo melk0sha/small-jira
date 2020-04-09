@@ -1,5 +1,10 @@
+# Discord: melk0sha
 
-## Task 2. Express REST service
+### Проверяющие! У меня несколько коммитов после дедлайна, я предлагаю руководствоваться правилами JS-этапа, где за просрочку до 3-х дней снимали -10 баллов.
+
+# Express REST service
+
+## OVERVIEW
 
 Let's try to create a competitor for Trello!
 
@@ -7,50 +12,57 @@ Let's try to create a competitor for Trello!
 
 - User (with attributes):
   ```javascript
-  { id, name, login, password }
+  {
+    id, name, login, password;
+  }
   ```
 - Board (set of columns):
   ```javascript
-  { id, title, columns }
+  {
+    id, title, columns;
+  }
   ```
 - Column (set of tasks):
   ```javascript
-   { id, title, order }
+  {
+    id, title, order;
+  }
   ```
 - Task:
   ```javascript
   {
     id,
-    title,
-    order,
-    description,
-    userId, //assignee
-    boardId,
-    columnId
+      title,
+      order,
+      description,
+      userId, //assignee
+      boardId,
+      columnId;
   }
   ```
 
 **Details:**
 
 1. For User, Board and Task REST endpoints with separate router paths should be created
-    * `/users`
-      * `GET /users` - get all users (remove password from response)
-      * `GET /users/:id` - get the user by id (ex. “/users/123”) (remove password from response)
-      * `POST /users` - create user
-      * `PUT /users/:id` - update user
-      * `DELETE /users/:id` - delete user
-    * `/boards`
-      * GET all
-      * GET by id
-      * POST
-      * PUT
-      * DELETE
-    * `/tasks`
-      * GET all by boardId
-      * GET by id
-      * POST
-      * PUT
-      * DELETE
+
+   - `/users`
+     - `GET /users` - get all users (remove password from response)
+     - `GET /users/:id` - get the user by id (ex. “/users/123”) (remove password from response)
+     - `POST /users` - create user
+     - `PUT /users/:id` - update user
+     - `DELETE /users/:id` - delete user
+   - `/boards`
+     - GET all
+     - GET by id
+     - POST
+     - PUT
+     - DELETE
+   - `/tasks`
+     - GET all by boardId
+     - GET by id
+     - POST
+     - PUT
+     - DELETE
 
 2. When somebody DELETE Board, all its Tasks should be deleted as well.
 
@@ -66,7 +78,30 @@ Let's try to create a competitor for Trello!
 
 8. Service should listen on PORT 4000.
 
-**Hints**
+---
 
-* To test the service CRUD methods you can use Swagger html (see [README.md](https://github.com/rolling-scopes-school/nodejs-course-template/blob/master/README.md#running-application)).
-* To generate all entities “id”s use [uuid](https://www.npmjs.com/package/uuid) package.
+## HOW TO INSTALL
+
+1. Clone this repository to your local machine.
+2. Go to folder.
+3. Run `npm install`.
+
+---
+
+## USAGE EXAMPLE
+
+1. Run `npm start` in the first terminal - you will start the server.
+2. Run `npm test` in the second terminal - you will see completed tests.
+3. Open `http://localhost:4000/doc/` to see Swagger UI.
+
+---
+
+## TOOLS USING
+
+**[Node.js](https://nodejs.org/en/)**, **JavaScript**, **[Express](https://expressjs.com/ru/)**, **[Swagger](https://swagger.io/)** and **[uuid](https://www.npmjs.com/package/uuid)** were used here.
+
+---
+
+### DEVELOPMENT
+
+@ 2020 Diana Ivanova (@melk0sha)

@@ -10,15 +10,10 @@ class Board {
     this.title = title;
     this.columns = columns.map(column => new Column(column));
   }
-
-  addColumn(column) {
-    const [columns] = this;
-    this.columns = [...columns, new Column(column)];
-  }
 }
 
 class Column {
-  constructor({ id = uuid(), title = "Board title", order } = {}) {
+  constructor({ id = uuid(), title = "Board title", order = 0 } = {}) {
     this.id = id;
     this.title = title;
     this.order = order;

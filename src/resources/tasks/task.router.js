@@ -1,45 +1,60 @@
 const router = require("express").Router();
-// const Task = require("./task.model");
 const tasksService = require("./task.service");
 
 router.route("/").get(async (req, res) => {
-  const tasks = await tasksService.getAllTasks();
+  const boardId = req.baseUrl.split("/")[2];
+  const tasks = await tasksService.getAllTasks(boardId);
   res.json(tasks);
 });
 
 router.route("/:id").get(async (req, res) => {
   const task = await tasksService.getTaskById(req.params.id);
-  res.json(task);
+  if (!req.params.id) {
+    res.status(400).send("Bad request");
+  } else if (!task) {
+    res.status(404).send("Not Found");
+  } else {
+    res.json(task);
+  }
 });
 
 router.route("/").post(async (req, res) => {
-  await tasksService.createTask(req.body);
-  if (req.body) {
-    res.status(200).send("The user has been created");
-  } else {
+  const boardId = req.baseUrl.split("/")[2];
+  if (!boardId) {
     res.status(400).send("Bad request");
   }
-  // res.status(401)
+
+  const task = await tasksService.createTask(boardId, req.body);
+
+  if (!req.body) {
+    res.status(400).send("Bad request");
+  } else if (!task) {
+    res.status(404).send("Not Found");
+  } else {
+    res.json(task);
+  }
 });
 
 router.route("/:id").put(async (req, res) => {
-  await tasksService.updateTask(req.params.id, req.body);
-  if (req.body) {
-    res.status(200).send("The user has been updated");
-  } else {
+  const tasks = await tasksService.updateTask(req.params.id, req.body);
+  if (!req.body) {
     res.status(400).send("Bad request");
+  } else if (!tasks) {
+    res.status(404).send("Not Found");
+  } else {
+    res.json(tasks);
   }
-  // res.status(401)
 });
 
 router.route("/:id").delete(async (req, res) => {
-  await tasksService.deleteTask(req.params.id);
-  if (req.body) {
-    res.status(200).send("The user has been deleted");
-  } else {
+  const tasks = await tasksService.deleteTask(req.params.id);
+  if (!req.params.id) {
     res.status(400).send("Bad request");
+  } else if (!tasks) {
+    res.status(404).send("Not Found");
+  } else {
+    res.json(tasks);
   }
-  // res.status(401)
 });
 
 module.exports = router;

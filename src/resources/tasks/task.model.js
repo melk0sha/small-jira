@@ -4,11 +4,11 @@ class Task {
   constructor({
     id = uuid(),
     title = "Task title",
-    order,
+    order = 0,
     description = "Task description",
-    userId, // assignee
-    boardId,
-    columnId
+    userId = null,
+    boardId = null,
+    columnId = null
   } = {}) {
     this.id = id;
     this.title = title;

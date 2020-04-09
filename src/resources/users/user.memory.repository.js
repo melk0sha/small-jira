@@ -1,121 +1,62 @@
-const fs = require("fs");
-const path = require("path");
 const User = require("./user.model");
+const { tasks } = require("../tasks/task.memory.repository");
+
+const users = [];
+
+users.push(new User("1", "Diana", "Diana1337", "g3454yfdfyh"));
+users.push(new User("2", "Andrey", "Andrey1337", "346fdfujhg"));
+users.push(new User("3", "Alexey", "Alexey1337", "fdsgtfju777"));
 
 const getAllUsers = async () => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(
-      path.join(__dirname, "../../public/users.json"),
-      "utf-8",
-      (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(JSON.parse(data));
-        }
-      }
-    );
-  });
+  return users;
 };
 
 const getUserById = async id => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(
-      path.join(__dirname, "../../public/users.json"),
-      "utf-8",
-      (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(JSON.parse(data).find(user => user.id === id));
-        }
-      }
-    );
-  });
+  const userById = users.find(user => user.id === id);
+  if (!userById) {
+    return;
+  }
+
+  return userById;
 };
 
-const createUser = async user => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(
-      path.join(__dirname, "../../public/users.json"),
-      "utf-8",
-      (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          const dataWithNewUser = JSON.stringify([
-            ...JSON.parse(data),
-            new User(user)
-          ]);
+const createUser = async newUser => {
+  if (!newUser.login || !newUser.password) {
+    return;
+  }
+  const user = new User(newUser);
+  users.push(user);
 
-          fs.writeFile(
-            path.join(__dirname, "../../public/users.json"),
-            dataWithNewUser,
-            () => {
-              resolve();
-            }
-          );
-        }
-      }
-    );
-  });
+  return user;
 };
 
-const updateUser = async (id, user) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(
-      path.join(__dirname, "../../public/users.json"),
-      "utf-8",
-      (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          const parsedData = JSON.parse(data);
-          const userIndex = parsedData.findIndex(
-            userData => userData.id === id
-          );
-          parsedData.splice(userIndex, 1, new User(user));
-          const updatedData = JSON.stringify(parsedData);
+const updateUser = async (id, newUser) => {
+  if (!newUser.login || !newUser.password) {
+    return;
+  }
+  const userIndex = users.findIndex(user => user.id === id);
+  users.splice(userIndex, 1, new User(newUser));
 
-          fs.writeFile(
-            path.join(__dirname, "../../public/users.json"),
-            updatedData,
-            () => {
-              resolve();
-            }
-          );
-        }
-      }
-    );
-  });
+  return users;
 };
 
 const deleteUser = async id => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(
-      path.join(__dirname, "../../public/users.json"),
-      "utf-8",
-      (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          const parsedData = JSON.parse(data);
-          const userIndex = parsedData.findIndex(
-            userData => userData.id === id
-          );
-          parsedData.splice(userIndex, 1);
-          const updatedData = JSON.stringify(parsedData);
+  const userToDelete = await getUserById(id);
+  if (!userToDelete) {
+    return;
+  }
+  updateTasks(id);
+  const userIndex = users.findIndex(user => user.id === id);
+  users.splice(userIndex, 1);
 
-          fs.writeFile(
-            path.join(__dirname, "../../public/users.json"),
-            updatedData,
-            () => {
-              resolve();
-            }
-          );
-        }
-      }
-    );
+  return users;
+};
+
+const updateTasks = async id => {
+  tasks.forEach(task => {
+    if (task.userId === id) {
+      task.userId = null;
+    }
   });
 };
 

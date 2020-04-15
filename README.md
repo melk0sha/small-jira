@@ -6,6 +6,8 @@
 
 ## OVERVIEW
 
+## Task 1. Express REST Service
+
 Let's try to create a competitor for Trello!
 
 **Create an [Express](https://expressjs.com/ru/) application, the application should operate with the following resources:**
@@ -77,6 +79,20 @@ Let's try to create a competitor for Trello!
 7. To run the service “npm start” command should be used.
 
 8. Service should listen on PORT 4000.
+
+## Task 2. Logging & Error Handling
+
+Add logging functionality to already existing REST service.
+
+1. Add express middleware which will log incoming requests to service (url, query parameters, body).
+
+2. Add express middleware which will log all unhandled errors and return a standard message with HTTP code 500 (Internal Server Error).
+
+3. Add errors handling to process.on(‘uncaughtException’,...).
+
+4. Add Unhandled promise rejection listener to log error
+
+5. console.log or writing to a file can be used for logging. Any third-party logging library can also be used for this purpose.
 
 ---
 

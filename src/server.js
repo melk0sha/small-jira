@@ -8,12 +8,24 @@ app.listen(PORT, () =>
 
 process.on("uncaughtException", err => {
   const exit = process.exit;
-  logger.error(`Uncaught exception: ${err.message}`);
-  exit(1);
+  const message = {
+    type: "Uncaught Exception",
+    msg: err.message,
+    stack: err.stack
+  };
+
+  logger.error(message);
+  logger.on("finish", () => exit(1));
 });
 
-process.on("unhandledRejection", reason => {
+process.on("unhandledRejection", err => {
   const exit = process.exit;
-  logger.error(`Unhandled rejection: ${reason.message}`);
-  exit(1);
+  const message = {
+    type: "Unhandled Rejection",
+    msg: err.message,
+    stack: err.stack
+  };
+
+  logger.error(message);
+  logger.on("finish", () => exit(1));
 });

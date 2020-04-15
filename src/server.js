@@ -18,12 +18,12 @@ process.on("uncaughtException", err => {
   logger.on("finish", () => exit(1));
 });
 
-process.on("unhandledRejection", err => {
+process.on("unhandledRejection", reason => {
   const exit = process.exit;
   const message = {
     type: "Unhandled Rejection",
-    msg: err.message,
-    stack: err.stack
+    msg: reason.message,
+    reason
   };
 
   logger.error(message);

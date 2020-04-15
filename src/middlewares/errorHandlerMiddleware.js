@@ -6,14 +6,10 @@ const errorHandlerMiddleware = (err, req, res) => {
 
   logger.error(
     `METHOD: ${method} --|-- URL: ${url} --|-- STATUS: ${statusCode ||
-      500} --|-- MESSAGE: ${message || err.message}`
+      500} --|-- MESSAGE: ${message}`
   );
 
-  if (statusCode) {
-    res.status(statusCode).json({ message });
-  } else {
-    res.status(500).json(err.message);
-  }
+  res.status(statusCode ? statusCode : 500).json({ message });
 };
 
 module.exports = errorHandlerMiddleware;

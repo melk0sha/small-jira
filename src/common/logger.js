@@ -1,7 +1,6 @@
 const path = require("path");
 const { createLogger, format, transports } = require("winston");
 
-console.log(path.resolve(__dirname, "../../logs/info.log"));
 const logger = createLogger({
   level: "silly",
   format: format.combine(format.uncolorize(), format.json()),
@@ -19,4 +18,5 @@ const logger = createLogger({
     })
   ]
 });
+
 module.exports = logger;

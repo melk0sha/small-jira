@@ -1,8 +1,8 @@
 class RequestError extends Error {
-  constructor(status = 404, message = "Not found") {
+  constructor(statusCode = 404, message = "Not Found") {
     super();
     this.message = message;
-    this.status = status;
+    this.statusCode = statusCode;
   }
 }
 

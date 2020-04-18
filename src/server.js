@@ -1,10 +1,13 @@
 const { PORT } = require("./common/config");
 const app = require("./app");
 const logger = require("./common/logger");
+const connectToDb = require("./db/db.connect");
 
-app.listen(PORT, () =>
-  console.log(`App is running on http://localhost:${PORT}`)
-);
+connectToDb(() => {
+  app.listen(PORT, () =>
+    console.log(`App is running on http://localhost:${PORT}`)
+  );
+});
 
 process.on("uncaughtException", err => {
   const exit = process.exit;

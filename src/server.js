@@ -1,7 +1,7 @@
 const { PORT } = require("./common/config");
 const app = require("./app");
 const logger = require("./common/logger");
-const connectToDb = require("./db/db.connect");
+const connectToDb = require("./db/connect.db");
 
 connectToDb(() => {
   app.listen(PORT, () =>

@@ -54,15 +54,15 @@ This is a service that resembles Jira.
 
 ### About Logging & Error Handling
 
-1. There is a middleware which logs incoming requests to service.
-2. There is a middleware which logs all unhandled errors and return a standard message with HTTP code 500 (Internal Server Error).
+1. There is a middleware which logs *incoming requests* to service.
+2. There is a middleware which logs *all unhandled errors* and return a standard message with HTTP code 500 (Internal Server Error).
 3. There is an errors handling to *uncaughtException*.
 4. There is a *unhandledRejection* listener to log errors.
 
 ### About Database
 
 MongoDB is used as a service database.  
-Mongoose ODM is used to store and update data here.
+Mongoose ODM is used to store and update data.
 
 ---
 

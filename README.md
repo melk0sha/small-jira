@@ -1,5 +1,3 @@
-# Discord: melk0sha
-
 # Express REST Service
 
 ## OVERVIEW

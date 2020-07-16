@@ -1,77 +1,72 @@
 const router = require("express").Router();
+const Task = require("./task.model");
 const tasksService = require("./task.service");
 const RequestError = require("../../common/requestError");
 
-router.route("/").get(async (req, res, next) => {
+router.route("/:boardId/tasks").get(async (req, res, next) => {
   try {
-    const boardId = req.baseUrl.split("/")[2];
-    const tasks = await tasksService.getAllTasks(boardId);
-    res.json(tasks);
+    const tasks = await tasksService.getTasksByBoardId(req.params.boardId);
+
+    res.json(tasks.map(Task.toResponse));
     return next();
   } catch (err) {
     return next(err);
   }
 });
 
-router.route("/:id").get(async (req, res, next) => {
+router.route("/:boardId/tasks/:taskId").get(async (req, res, next) => {
   try {
-    if (!req.params.id) {
-      throw new RequestError(400, "ID not found");
-    }
+    const task = await tasksService.getTaskById(req.params.taskId);
 
-    const task = await tasksService.getTaskById(req.params.id);
     if (!task) {
       throw new RequestError(404, "Task not found");
     }
 
-    res.json(task);
+    res.json(Task.toResponse(task));
     return next();
   } catch (err) {
     return next(err);
   }
 });
 
-router.route("/").post(async (req, res, next) => {
+router.route("/:boardId/tasks").post(async (req, res, next) => {
   try {
-    const boardId = req.baseUrl.split("/")[2];
+    const task = await tasksService.createTask(req.params.boardId, req.body);
 
-    if (!boardId) {
-      throw new RequestError(400, "ID not found");
+    if (!task) {
+      throw new RequestError(400, "Bad request");
     }
 
-    const task = await tasksService.createTask(boardId, req.body);
-    res.json(task);
+    res.json(Task.toResponse(task));
     return next();
   } catch (err) {
     return next(err);
   }
 });
 
-router.route("/:id").put(async (req, res, next) => {
+router.route("/:boardId/tasks/:taskId").put(async (req, res, next) => {
   try {
-    if (!req.params.id) {
-      throw new RequestError(400, "Id not found");
+    const task = await tasksService.updateTask(req.params.taskId, req.body);
+
+    if (!task) {
+      throw new RequestError(400, "Bad request");
     }
 
-    const tasks = await tasksService.updateTask(req.params.id, req.body);
-    res.json(tasks);
+    res.json(Task.toResponse(task));
   } catch (err) {
     return next(err);
   }
 });
 
-router.route("/:id").delete(async (req, res, next) => {
+router.route("/:boardId/tasks/:taskId").delete(async (req, res, next) => {
   try {
-    if (!req.params.id) {
-      throw new RequestError(400, "ID not found");
-    }
+    const task = await tasksService.deleteTask(req.params.taskId);
 
-    const tasks = await tasksService.deleteTask(req.params.id);
-    if (!tasks) {
+    if (!task) {
       throw new RequestError(404, "Task not Found");
     }
 
-    res.json(tasks);
+    res.status(204).send();
     return next();
   } catch (err) {
     return next(err);
